@@ -12,11 +12,13 @@ namespace Server
         NetworkStream stream;
         TcpClient client;
         public string UserId;
+        public string displayName { get; set; }
+
         public Client(NetworkStream Stream, TcpClient Client)
         {
             stream = Stream;
             client = Client;
-            UserId = "495933b6-1762-47a1-b655-483510072e73";
+            UserId = Guid.NewGuid().ToString();
         }
         public void Send(string Message)
         {
@@ -25,13 +27,27 @@ namespace Server
         }
         public void Recieve()
         {
-            byte[] recievedMessage = new byte[256];
-            stream.Read(recievedMessage, 0, recievedMessage.Length);
-            string recievedMessageString = Encoding.ASCII.GetString(recievedMessage);
-            Message message = new Message(null, recievedMessageString);
-            Server.messageQueue.Enqueue(message);
-            Console.WriteLine(recievedMessageString);
+            while (true)
+            {
+                try
+                {
+                    byte[] recievedMessage = new byte[256];
+                    stream.Read(recievedMessage, 0, recievedMessage.Length);
+                    string recievedMessageString = Encoding.ASCII.GetString(recievedMessage);
+                    Message message = new Message(null, recievedMessageString);
+                    Server.messageQueue.Enqueue(message);
+                    Console.WriteLine(recievedMessageString);
+                }
+                catch
+                {
+                    Console.WriteLine("Something has gone wrong :( ");
+                }
+            }
+            
+            
         }
 
+       
+        
     }
 }

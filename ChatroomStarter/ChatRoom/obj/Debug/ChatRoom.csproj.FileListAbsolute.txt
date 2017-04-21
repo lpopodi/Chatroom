@@ -1,0 +1,9 @@
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\bin\Debug\ChatRoom.exe.config
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\bin\Debug\ChatRoom.exe
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\bin\Debug\ChatRoom.pdb
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.csprojResolveAssemblyReference.cache
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.Form1.resources
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.Properties.Resources.resources
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.csproj.GenerateResource.Cache
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.exe
+C:\Users\Lisa\Documents\GitHub\Chatroom\ChatroomStarter\ChatRoom\obj\Debug\ChatRoom.pdb

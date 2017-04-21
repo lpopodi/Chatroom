@@ -10,11 +10,15 @@ namespace Client
     {
         public static void DisplayMessage(string message)
         {
-            Console.WriteLine(message);
+                Console.WriteLine("From client: " + message);
         }
         public static string GetInput()
         {
-            return Console.ReadLine();
+            
+                return Console.ReadLine();
+            
         }
+
+
     }
 }

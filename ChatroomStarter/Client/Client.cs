@@ -12,23 +12,36 @@ namespace Client
     {
         TcpClient clientSocket;
         NetworkStream stream;
+        public string displayName { get; set; }
         public Client(string IP, int port)
         {
+            Console.WriteLine("Enter your display name");
+            string displayName = Console.ReadLine();
             clientSocket = new TcpClient();
             clientSocket.Connect(IPAddress.Parse(IP), port);
             stream = clientSocket.GetStream();
         }
         public void Send()
         {
-            string messageString = UI.GetInput();
-            byte[] message = Encoding.ASCII.GetBytes(messageString);
-            stream.Write(message, 0, message.Count());
+            while (true)
+            {
+                string messageString = UI.GetInput();
+                byte[] message = Encoding.ASCII.GetBytes(messageString);
+                stream.Write(message, 0, message.Count());
+            }
+            
         }
         public void Recieve()
         {
-            byte[] recievedMessage = new byte[256];
-            stream.Read(recievedMessage, 0, recievedMessage.Length);
-            UI.DisplayMessage(Encoding.ASCII.GetString(recievedMessage));
+            while (true)
+            {
+                byte[] recievedMessage = new byte[256];
+                stream.Read(recievedMessage, 0, recievedMessage.Length);
+                UI.DisplayMessage(Encoding.ASCII.GetString(recievedMessage));
+            }
+            
         }
+
+
     }
 }
