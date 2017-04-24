@@ -10,6 +10,7 @@ namespace Server
     {
         static void Main(string[] args)
         {
+            ChatLog ChatLog = new ChatLog();
             new Server().Run();
             Console.ReadLine();
         }

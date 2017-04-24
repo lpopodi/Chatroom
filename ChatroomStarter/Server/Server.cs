@@ -14,22 +14,18 @@ namespace Server
     {
         public static ConcurrentQueue<Message> messageQueue = new ConcurrentQueue<Message>();
         public static Client client;
-        public static Dictionary<string, Client> _activeChatClients = new Dictionary<string, Client>();
+        public static Dictionary<string, Client> activeChatClients = new Dictionary<string, Client>();
         TcpListener server;
 
         public Server()
         {
-            server = new TcpListener(IPAddress.Parse("192.168.0.106"), 6915);
+            server = new TcpListener(IPAddress.Parse("192.168.0.107"), 6915);
             server.Start();
-            
+            Console.WriteLine("Chat Server Started");
         }
         public void Run()
         {
-            Console.WriteLine("Chat Server Started");
-
-            Parallel.Invoke(AcceptClient, Respond);
-            
-                      
+            Parallel.Invoke(AcceptClient, Respond);           
         }
         private void AcceptClient()
         {
@@ -41,12 +37,14 @@ namespace Server
                 Console.WriteLine("New Client Connected");
                 NetworkStream stream = clientSocket.GetStream();
                 client = new Client(stream, clientSocket);
-                //Thread chatThread = new Thread(new ParameterizedThreadStart(StartChat));
-                //chatThread.Start(client);
-                Thread chatThread = new Thread(() => StartChat(client));
+                client.GetDisplayName();
+                //Thread chatThread = new Thread(() => StartChat(client));
+                activeChatClients.Add(client.UserId, client);
+                Thread chatThread = new Thread(new ThreadStart(client.Recieve));
                 chatThread.Start();
-                Console.WriteLine($"==> {client.displayName} ");
-                //_activeChatClients.Add(client.UserId, client);
+                Console.WriteLine($"==> {client.DisplayName} joined the chat");
+                Thread acceptMoreClients = new Thread(new ThreadStart(AcceptClient));
+                acceptMoreClients.Start();
             }
                 catch (Exception)
                 {
@@ -55,32 +53,25 @@ namespace Server
 
 }
 
-        private void StartChat(Client client)
-        {
-            //adding client to dictionary
-            _activeChatClients.Add(client.UserId, client);
-            Thread thread = new Thread(new ThreadStart(client.Recieve));
-            thread.Start();
-            //Task.Run(() => { client.Recieve(); });
-            //Task.Run(() => { Respond(); });
-
-        }
-
         private void Respond()
         {
             while (true)
             {
-                Message message = default(Message);
-                if (messageQueue.TryDequeue(out message))
-                {
-                    client.Send(message.Body);
-                }
+                //foreach (KeyValuePair<string, Client> kvp in activeChatClients)
+                //{
+                    Message message = default(Message);
+                    if (messageQueue.TryDequeue(out message))
+                    {
+                        client.Send(message.Body);
+                    }
+                //}
+
             }
         }
 
         private void NotifyNewUser(string displayName)
         {
-            Console.WriteLine($"{client.displayName} has joined the chat room.");
+            Console.WriteLine($"{client.DisplayName} has joined the chat room.");
         }
 
     }

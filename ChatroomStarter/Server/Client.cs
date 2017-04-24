@@ -12,7 +12,9 @@ namespace Server
         NetworkStream stream;
         TcpClient client;
         public string UserId;
-        public string displayName { get; set; }
+        private string displayName;
+
+        public string DisplayName { get { return displayName; } set { displayName = value; } }
 
         public Client(NetworkStream Stream, TcpClient Client)
         {
@@ -42,12 +44,25 @@ namespace Server
                 {
                     Console.WriteLine("Something has gone wrong :( ");
                 }
-            }
-            
-            
+            }  
         }
 
-       
-        
+        public void GetDisplayName()
+        {
+            Send("Enter your display name");
+            byte[] recievedMessage = new byte[56];
+            try
+            {
+                stream.Read(recievedMessage, 0, recievedMessage.Length);
+            }
+            catch
+            {
+                Console.WriteLine("Error trying to set DisplayName for chat");
+            }
+        }
+
+
+
+
     }
 }

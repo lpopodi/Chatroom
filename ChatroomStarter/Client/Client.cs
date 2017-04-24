@@ -12,11 +12,11 @@ namespace Client
     {
         TcpClient clientSocket;
         NetworkStream stream;
-        public string displayName { get; set; }
+        public string displayName;
         public Client(string IP, int port)
         {
-            Console.WriteLine("Enter your display name");
-            string displayName = Console.ReadLine();
+            //Console.WriteLine("Enter your display name");
+            //string displayName = Console.ReadLine();
             clientSocket = new TcpClient();
             clientSocket.Connect(IPAddress.Parse(IP), port);
             stream = clientSocket.GetStream();
@@ -42,6 +42,23 @@ namespace Client
             
         }
 
+        public void SetDisplayName()
+        {
+            Send("Enter your display name");
+            byte[] recievedMessage = new byte[56];
+            try
+            {
+                stream.Read(recievedMessage, 0, recievedMessage.Length);
+            }
+            catch
+            {
+                Console.WriteLine("Error trying to set DisplayName for chat");
+            }
+        }
 
+        private void Send(string v)
+        {
+            
+        }
     }
 }
