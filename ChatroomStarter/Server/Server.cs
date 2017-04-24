@@ -57,8 +57,9 @@ namespace Server
         {
             while (true)
             {
-                foreach (KeyValuePair<string, Client> kvp in activeChatClients.ToList())
-                {
+                //foreach (KeyValuePair<string, Client> kvp in activeChatClients.ToList())
+                foreach (var kvp in activeChatClients)
+                    {
                     Message message = default(Message);
                     if (messageQueue.TryDequeue(out message))
                     {

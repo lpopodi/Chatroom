@@ -10,15 +10,7 @@ namespace Server
     {
         public void Log(string message)
         {
-           // string path = @"";
-
-            //if (!File.Exists(path))
-            //{
-            //    string createText = "!!!! Beginning of Log !!!!\n" + Environment.NewLine;
-            //    File.WriteAllText(path, createText);
-            //}
-
-            //File.AppendAllText(path, DateTime.Now.ToString() + "\n" + message);
+            
         }
     }
 }
