@@ -25,7 +25,7 @@ namespace Server
         }
         public void Run()
         {
-            Parallel.Invoke(AcceptClient, Respond);           
+            Parallel.Invoke(AcceptClient, Respond);
         }
         private void AcceptClient()
         {
@@ -46,25 +46,26 @@ namespace Server
                 Thread acceptMoreClients = new Thread(new ThreadStart(AcceptClient));
                 acceptMoreClients.Start();
             }
-                catch (Exception)
-                {
-                    Console.WriteLine("An error occurred while trying to create a threaded client");
-                }
+            catch (Exception)
+            {
+                Console.WriteLine("An error occurred while trying to create a threaded client");
+            }
 
-}
+        }
 
         private void Respond()
         {
             while (true)
             {
-                //foreach (KeyValuePair<string, Client> kvp in activeChatClients)
-                //{
+                foreach (KeyValuePair<string, Client> kvp in activeChatClients.ToList())
+                {
                     Message message = default(Message);
                     if (messageQueue.TryDequeue(out message))
                     {
                         client.Send(message.Body);
+                        break;
                     }
-                //}
+                }
 
             }
         }
